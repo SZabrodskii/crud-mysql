@@ -10,18 +10,23 @@ function createApp() {
     password: 'password',
     database: 'userdb',
   });
+
   const app = express();
   const port = 3000;
   const userService = new UserService(db);
 
   app.use(bodyParser.json());
+
   app.post('/', async (req, res) => {
-    const {name, email} = req.body;
-
-    const user = await userService.create(name, email);
-
-    res.json(user)
+    const { name, email } = req.body;
+    try {
+      const user = await userService.create(name, email);
+      res.status(201).json(user);  // Возвращаем статус-код 201 и созданного пользователя
+    } catch (err) {
+      res.status(500).json({ message: 'Error creating user', error: err.message });
+    }
   });
+
   app.get('/', async (req, res) => {
     const result = await userService.getAll()
     res.json(result)
