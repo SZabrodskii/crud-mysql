@@ -39,8 +39,8 @@ function createApp() {
 
   app.delete('/:id', async (req, res) => {
     const { id } = req.params;
-    const result = await userService.delete(id);
-    res.json(result);
+    await userService.delete(id);
+    res.sendStatus(204);
   });
 
   app.listen(port, () => {

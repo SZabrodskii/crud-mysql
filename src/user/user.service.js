@@ -9,15 +9,15 @@ class UserService {
   }
 
   async create(name, email) {
-    const sql = 'INSERT INTO users (name, email) VALUES (?, ?)';
-    const result = {id: 0, name, email}
+    const result = { id: 0, name, email };
 
     try {
-      const res = await this.db.query(sql, [name, email]);
+      const res = await this.db.query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email]);
       result.id = res.insertId;
     } catch (err) {
       throw err;
     }
+
     return result;
   }
 
@@ -41,7 +41,6 @@ class UserService {
   async delete(id) {
     try {
       await this.db.query('DELETE FROM users WHERE id = ?', [id]);
-      return {message: 'User deleted successfully'};
     } catch (err) {
       throw err;
     }
