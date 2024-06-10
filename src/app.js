@@ -19,8 +19,10 @@ function createApp() {
 
   app.post('/', async (req, res) => {
     const { name, email } = req.body;
+
     try {
       const user = await userService.create(name, email);
+
       res.status(201).json(user);  // Возвращаем статус-код 201 и созданного пользователя
     } catch (err) {
       res.status(500).json({ message: 'Error creating user', error: err.message });
@@ -29,12 +31,14 @@ function createApp() {
 
   app.get('/', async (req, res) => {
     const result = await userService.getAll()
+
     res.json(result)
   });
 
   app.get('/:id', async (req, res) => {
     const { id } = req.params;
     const user = await userService.getByID(id);
+
     if (user) {
       res.json(user);
     } else {
@@ -44,7 +48,9 @@ function createApp() {
 
   app.delete('/:id', async (req, res) => {
     const { id } = req.params;
+
     await userService.delete(id);
+
     res.sendStatus(204);
   });
 

@@ -10,4 +10,5 @@ function createSQLConnection(config) {
   return conn;
 }
 
+
 module.exports = {createSQLConnection};
